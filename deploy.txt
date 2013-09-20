@@ -1,0 +1,21 @@
+mkdir /opt/virtualenv
+cd /opt/virtualenv
+sudo pip install virtualenv
+sudo pip install virtualenvwrapper
+export WORKON_HOME=/opt/virtualenv
+source /usr/local/bin/virtualenvwrapper.sh
+mkvirtualenv report_server
+sudo aptitude install build-essential libmysqlclient-dev python-dev git 
+pip install MySQL-python
+deactivate
+mkdir /opt/report_server
+cd /opt/report_server/
+mkdir log
+git clone git@box.ben-claire.fr:myrepo
+cd myrepo/ReportServer
+sudo aptitude install nginx
+sudo ln -s /opt/report_server/myrepo/ReportServer/nginx.conf  /etc/nginx/sites-enabled/
+sudo /etc/init.d/nginx reload
+add 127.0.0.1 localtest.local in /etc/hosts
+uwsgi uwsgi.ini
+

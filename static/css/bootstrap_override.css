@@ -1,0 +1,16 @@
+body {
+ padding-top: 60px; 
+}
+.pagination {
+	/* Default is 20px why ??? */
+	margin: 0px;
+}
+.table-condensed tbody > tr > td {
+	/* Default is 5px, it is too big */
+	padding: 1px;
+}
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1580px !important; /* or 950px */
+}

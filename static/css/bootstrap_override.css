@@ -14,3 +14,12 @@ body {
   margin-left: auto;
   max-width: 1580px !important; /* or 950px */
 }
+.dataTable thead{
+    font-size:10px;
+}   
+.dataTable {
+	font-size:12px;
+}   
+.search_init {
+	font-size:10px;
+}

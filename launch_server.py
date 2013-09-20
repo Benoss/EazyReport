@@ -4,9 +4,7 @@ from libs.bottle import run
 from src.dispatcher import *
 from config import Config
 from init_db import init_tables
- 
-if os.path.exists('reportserver.db'):
-    os.remove('reportserver.db')
+
 init_tables()
 Config().refresh_config()
 

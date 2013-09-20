@@ -2,7 +2,32 @@ from src.utils import random_string, slugify
 from libs.peewee import SqliteDatabase, MySQLDatabase, Model, CharField,\
     IntegerField, TextField, BooleanField, DateTimeField
 
-StorageDb = SqliteDatabase('reportserver.db')
+import ConfigParser, os
+
+
+
+
+def get_storage_db():
+    config = ConfigParser.ConfigParser()
+    try:
+        config.readfp(open('config.ini'))
+    except IOError:
+        raise Exception("No config file copy config_default.ini to config.ini")
+    
+    storage_db_type = config.get("General", "storage_db_type")
+    if storage_db_type == 'SQLite':
+        return SqliteDatabase(config.get("SQLite", "file"))
+    elif  storage_db_type == 'MySQL':
+        return MySQLDatabase(host=config.get("MySQL", "host"),\
+                             user=config.get("MySQL", "login"),\
+                             passwd=config.get("MySQL", "password"),\
+                             database=config.get("MySQL", "default_db"),\
+                             port=config.getint("MySQL", "port"))
+        
+    
+
+
+StorageDb = get_storage_db()
 class BaseModel(Model):
     class Meta:
         database = StorageDb

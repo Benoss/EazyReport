@@ -8,7 +8,7 @@ class UpdateDB(WebPage):
         WebPage.__init__(self, pagepath)
         self.main_template = "update_db.tpl"
         self.request_params =  dict(request.params)
-        self.model_list = [ 'ServerConfig', 'MenuItem', 'ReportInfo', 'SQLquery']
+        self.model_list = [ 'ServerConfig', 'MenuItem', 'ReportInfo', 'SQLquery', 'Connection']
         self.table_fields = []
         self.rows = None
         if self.request_params.has_key("table"):

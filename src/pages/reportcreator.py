@@ -39,7 +39,7 @@ class ReportCreator(WebPage):
                 self.sql_query = SQLquery.get(SQLquery.id == self.report.source_id)
             
             if self.action == 'edit' or self.action == 'new':
-                self.current_report = report
+                self.current_report = self.report
                 self.report.create_report_if_needed()
                 self.last_run = report.last_run
                 self.datatable = Datatables(self, report.name, report.get_header(), report.row_callback)

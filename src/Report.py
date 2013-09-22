@@ -17,13 +17,15 @@ class ReportInfo(model.ReportInfo):
         filename = os.path.join(Config().cache_folder, self.name + ".csv")
         json_filename = os.path.join(Config().cache_folder, self.name + ".json")
         json_array = []
+        
+        result = DBM(connection.name).query(query_info.sql)
+        
         with open(filename, 'wb') as csvfile:
             csv_writer = csv.writer(csvfile, delimiter=',',
                                     quotechar='"', quoting=csv.QUOTE_ALL)
-            
-            result = DBM(connection.name).query(query_info.sql)
+
             csv_writer.writerow(result.columns)
-            
+            csvfile.flush()
             for index, row in enumerate(result.rows):
                 row = list(row)
                 csv_writer.writerow(row)

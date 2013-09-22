@@ -53,7 +53,10 @@ class ReportInfo(model.ReportInfo):
         
     def get_header(self):
         filename = os.path.join(Config().cache_folder, self.name + ".csv")
-        csvfile = open(filename, 'rb')
+        try:
+            csvfile = open(filename, 'rb')
+        except IOError:
+            self.create_report()
         csv_reader = csv.reader(csvfile)
         try:
             first_row = csv_reader.next()

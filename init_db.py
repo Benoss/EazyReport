@@ -49,7 +49,7 @@ def init_tables():
         },""")
         
         ServerConfig.create(key="CookieKey", value=random_string(50))
-        ServerConfig.create(key="AppName", value="AnyReport")
+        ServerConfig.create(key="AppName", value="EazyReport")
         ServerConfig.create(key="CacheFolder", value="cache")
     except Exception, e:
         print "Database already exists", e

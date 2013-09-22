@@ -14,12 +14,13 @@ class Config(object):
     
     #StorageDb = MySQLDatabase('reportserver', user='root', passwd='root')
     cookie_key = "DefinedLater"
-    app_name = "defaultName"
+    app_name = "EazyReport"
     cache_folder = "cache"
     
     def refresh_config(self):
         self.cookie_key = ServerConfig.get(key="CookieKey").value
         self.cache_folder = ServerConfig.get(key="CacheFolder").value
+        self.app_name = ServerConfig.get(key="AppName").value
         if not os.path.exists(self.cache_folder):
             os.mkdir(self.cache_folder)
         for connect in Connection.select():

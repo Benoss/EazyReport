@@ -53,7 +53,10 @@ class ReportInfo(model.ReportInfo):
         filename = os.path.join(Config().cache_folder, self.name + ".csv")
         csvfile = open(filename, 'rb')
         csv_reader = csv.reader(csvfile)
-        first_row = csv_reader.next()
+        try:
+            first_row = csv_reader.next()
+        except StopIteration:
+            self.create_report()
         csvfile.close()
         return first_row
     

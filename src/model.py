@@ -16,13 +16,13 @@ def get_storage_db():
     
     storage_db_type = config.get("General", "storage_db_type")
     if storage_db_type == 'SQLite':
-        return SqliteDatabase(config.get("SQLite", "file"))
+        return SqliteDatabase(config.get("SQLite", "file"), threadlocals=True)
     elif  storage_db_type == 'MySQL':
         return MySQLDatabase(host=config.get("MySQL", "host"),\
                              user=config.get("MySQL", "login"),\
                              passwd=config.get("MySQL", "password"),\
                              database=config.get("MySQL", "default_db"),\
-                             port=config.getint("MySQL", "port"))
+                             port=config.getint("MySQL", "port"), threadlocals=True)
         
     
 

@@ -1,0 +1,2 @@
+#sudo -u www-data python cron.py
+25 5    * * *   www-data    python /opt/EazyReport/cron.py > /opt/EazyReport/log/last_cron.log  2>&1

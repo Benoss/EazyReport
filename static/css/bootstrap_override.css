@@ -12,7 +12,7 @@ body {
 .container {
   margin-right: auto;
   margin-left: auto;
-  max-width: 1580px !important; /* or 950px */
+  max-width: 1880px !important; /* or 950px */
 }
 .dataTable thead{
     font-size:10px;

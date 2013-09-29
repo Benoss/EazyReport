@@ -13,7 +13,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#">{{ page.get_config().app_name }}</a>
+    <a class="navbar-brand" href="/">{{ page.get_config().app_name }}</a>
     <div class="nav">
       <ul class="nav navbar-nav">
         %for link in page.get_menu(1):

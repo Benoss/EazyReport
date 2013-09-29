@@ -15,6 +15,10 @@ def instantiate_page(page_path):
     page_class = getattr(page_module, menu_item.page_type)
     return page_class(page_path, menu_item.page_id)
 
+@route('/favicon.ico')
+def facivo():
+    return
+
 @route('/static/<filepath:path>')
 def static(filepath):
     return static_file(filepath, root="./static/")
@@ -26,6 +30,12 @@ def cache_file(filepath):
 @route('/')
 def default():
     bottle.redirect('/app/home')
+    
+@post('/login')
+@get('/login')
+def login_page():
+    page = login.Login('login', 1)
+    return template('index', page=page)
     
 @route('/:module')
 @route('/:module/')

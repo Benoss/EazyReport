@@ -42,7 +42,7 @@ class ReportCreator(WebPage):
                 self.current_report = self.report
                 self.report.create_report_if_needed()
                 self.last_run = report.last_run
-                self.datatable = Datatables(self, report.name, report.get_header(), report.row_callback)
+                self.datatable = Datatables(self, self.report.name, self.report.get_header(), self.report.row_callback)
                 
                 
 #                 

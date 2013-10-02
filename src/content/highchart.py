@@ -16,8 +16,8 @@ class HighChart():
         self.height = 400
         self.parent_page.foot_js_templates.append(Template("highchart_js.tpl", self))
         
-        self.description = "Description"
-        self.title = 'title'
+        self.description = chart_model.description
+        self.title = chart_model.name
         
 
     def get_json(self):

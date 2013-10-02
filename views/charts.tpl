@@ -1,6 +1,11 @@
 <div class="col-lg-2">
    <ul class="nav  nav-pills nav-stacked">       
-
+   %for group_name in page.chart_groups:    
+       <li class="">
+         <a href="?group={{ group_name }}">
+         {{ group_name }}</a>
+       </li>
+    %end
    </ul>
 </div>
    

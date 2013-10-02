@@ -11,6 +11,8 @@ def create_menu_item(parent_path, name, order, page_type, page_id):
 def init_tables():
     StorageDb.connect()
     try:
+        MenuItem.create_table(True)
+
         ChartInfo.create_table(False)
         User.create_table(True)
         MenuItem.create_table(True)
@@ -30,7 +32,8 @@ def init_tables():
         create_menu_item("/admin/" ,'Report Creator', 0, 'ReportCreator', 4)
         SimplePageConfig.create(title="Config", text="This is the Config page")
         create_menu_item("/app/" ,'Reports', -1, 'Reports', 5)
-        
+        create_menu_item("/app/" ,'Charts', 4, 'Charts', 8)
+        create_menu_item("/admin/" ,'Chart Creator', 4, 'ChartCreator', 9)
     
         Connection.create(name="local", description="", connection_engine="mysql", \
                           connection_login="root", connection_password="root", \

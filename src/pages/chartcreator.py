@@ -26,11 +26,10 @@ class ChartCreator(WebPage):
                 self.special_return = Je.encode(json_return)
             elif self.action == 'new':
                 self.chart = ChartInfo.create(name='PlaceHolderName', connection_id=1)
-                redirect(self.pagepath + "?chart=PlaceHolderName&action=edit" )
+                self.chart.save()
+                redirect(self.pagepath + "?chart_id=" + str(self.chart.id) +'&action=edit')
             elif self.request_params.has_key('chart_id'):
-                print self.charts
                 for chart in self.charts:
-                    print chart.id, self.request_params['chart_id']
                     if str(chart.id)==self.request_params['chart_id']:
                         self.chart = chart
             if self.action == 'edit' or self.action == 'new':

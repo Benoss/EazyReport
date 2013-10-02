@@ -19,7 +19,7 @@ class ReportInfo(model.ReportInfo):
         json_array = []
         
         result = DBM(connection.name).query(query_info.sql)
-        
+        self.nb_rows = 0
         with open(filename, 'wb') as csvfile:
             csv_writer = csv.writer(csvfile, delimiter=',',
                                     quotechar='"', quoting=csv.QUOTE_ALL)
@@ -30,14 +30,15 @@ class ReportInfo(model.ReportInfo):
                 row = list(row)
                 csv_writer.writerow(row)
                 json_array.append(row)
-        
-            self.nb_rows = index + 1
+                self.nb_rows = index + 1
+                
+            csvfile.flush()
             
-        
-        
+            
         json_file = open(json_filename, "wb")
         Je = JsonEncoder()
         json_file.write(Je.encode({ "aaData": json_array }))
+        
         self.last_run = datetime.datetime.now()
         self.last_duration = Humanize.pretty_delta(time.time() - start_time)
         self.save()
@@ -57,6 +58,7 @@ class ReportInfo(model.ReportInfo):
             csvfile = open(filename, 'rb')
         except IOError:
             self.create_report()
+            csvfile = open(filename, 'rb')
         csv_reader = csv.reader(csvfile)
         try:
             first_row = csv_reader.next()

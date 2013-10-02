@@ -15,7 +15,7 @@
 <table class="table table-striped">
         <thead>
           <tr>
-          %for name in page.table_fields.keys():
+          %for name in page.table_fields_name:
            <th>{{ name }}</th>
           %end
           </tr>

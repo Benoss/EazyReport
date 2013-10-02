@@ -14,16 +14,17 @@ class UpdateDB(WebPage):
         if self.request_params.has_key("table"):
             self.table = self.request_params['table']
             model_class = getattr(src.model, self.table)
-            self.table_fields = model_class._meta.fields
+            self.table_fields_name = [field[0] for field in model_class._meta.get_sorted_fields()]
+            self.table_fields_vals = [field[1] for field in model_class._meta.get_sorted_fields()]
             
             if self.request_params.has_key("action"):
                 self.action = self.request_params['action']
-                pk = [field for field in self.table_fields.values() if field.db_field == 'primary_key'][0].name
+                pk = [field for field in self.table_fields_vals if field.db_field == 'primary_key'][0].name
                 if self.request_params['action'] == 'edit':
                     self.values = model_class.select().where(getattr(model_class, pk) == self.request_params['id']).dicts()
                 elif self.request_params['action'] == 'update':
                     field_to_update = {}
-                    for field in self.table_fields.values():
+                    for field in self.table_fields_vals:
                         if field.name != pk and field.name in self.request_params.keys():
                             field_to_update[field.name] = self.request_params[field.name]
                     if self.request_params.has_key(pk) and  self.request_params[pk] and self.request_params[pk] != "" and self.request_params[pk] != "AUTO GENERATED":

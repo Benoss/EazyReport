@@ -13,7 +13,10 @@ class Sanity(WebPage):
         self.request_params =  dict(request.params)
         self.current_report = None
         
-        self.model_list =  ReportInfo.select().where(ReportInfo.report_type=='sanity')
+        self.model_list =  ReportInfo.select().where(ReportInfo.report_type=='sanity').order_by(ReportInfo.nb_rows.desc())
+        self.model_mapping = {}
+        for model in self.model_list:
+            self.model_mapping[model.id] = model
         
         for report in self.model_list:
             if self.request_params.has_key("sanity") and self.request_params["sanity"] == report.name:
@@ -23,6 +26,11 @@ class Sanity(WebPage):
                 self.datatable = Datatables(self, report.name, report.get_header(), report.row_callback)
                 
 
+    def get_danger(self, model_id):
+        if self.model_mapping[model_id].nb_rows > 1:
+            return 'danger'
+        else:
+            return 'success'
 
     def active(self, page_name):
         if self.current_report and page_name == self.current_report.name:

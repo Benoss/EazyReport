@@ -32,6 +32,15 @@ class BaseModel(Model):
     class Meta:
         database = StorageDb
 
+class ChartInfo(BaseModel):
+    name = CharField(default='')
+    group = CharField(default='')
+    description = CharField(default='')
+    cache_duration = IntegerField(default=86000)
+    last_run = DateTimeField(null=True, default=None)
+    sql = TextField(default='')
+    connection_id = IntegerField()
+    
 class User(BaseModel):
     login = CharField(unique=True)
     password = CharField()
@@ -53,7 +62,7 @@ class SQLquery(BaseModel):
 class ReportInfo(BaseModel):
     name = CharField(unique=True)
     description = TextField(default="")
-    cache_duration = IntegerField(default=0)
+    cache_duration = IntegerField(default=86000)
     last_run = DateTimeField(null=True, default=None)
     last_duration = CharField(null=True, default=None)
     report_type = CharField(default="invisible", index=True)

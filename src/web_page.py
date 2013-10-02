@@ -27,3 +27,9 @@ class WebPage():
     def get_menu(self, depth=0):
         return MenuInfo().get_menu(self.pagepath, depth)
     
+    def get_foot_js(self):
+        output = []
+        for x in self.foot_js:
+            if x.js_name not in [o.js_name for o in output]:
+                output.append(x)
+        return output

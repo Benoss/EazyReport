@@ -26,7 +26,7 @@
 <div class="container">
 	%include(page.main_template, page=page)
 </div>
-    %include('minitemplate/js', js_list=page.foot_js)
+    %include('minitemplate/js', js_list=page.get_foot_js())
     %for template in page.foot_js_templates:
         %include(template.template, content = template.content)
     %end

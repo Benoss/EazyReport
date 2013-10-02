@@ -1,1 +1,3 @@
-<div id="{{content.id}}" style="height: {{content.height}}px; min-width: {{content.width}}px"></div>
+<div id="{{chart.id}}" style="height: {{chart.height}}px; min-width: {{chart.width}}px">
+
+</div>

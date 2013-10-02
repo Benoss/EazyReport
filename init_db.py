@@ -1,5 +1,5 @@
 from src.model import StorageDb, User, MenuItem, Connection,\
-    ServerConfig, ReportInfo, SQLquery
+    ServerConfig, ReportInfo, SQLquery, ChartInfo
 from src.utils import slugify, random_string
 from src.pages.simplepage import SimplePageConfig
     
@@ -11,6 +11,7 @@ def create_menu_item(parent_path, name, order, page_type, page_id):
 def init_tables():
     StorageDb.connect()
     try:
+        ChartInfo.create_table(False)
         User.create_table(True)
         MenuItem.create_table(True)
         SimplePageConfig.create_table(True)

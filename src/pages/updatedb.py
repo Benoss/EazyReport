@@ -9,8 +9,9 @@ class UpdateDB(WebPage):
         self.main_template = "update_db.tpl"
         self.request_params =  dict(request.params)
         self.model_list = [ 'ServerConfig', 'MenuItem', 'ReportInfo', 'SQLquery', 'Connection']
-        self.table_fields = []
         self.rows = None
+        self.table_fields_name = []
+        self.table_fields_vals = []
         if self.request_params.has_key("table"):
             self.table = self.request_params['table']
             model_class = getattr(src.model, self.table)

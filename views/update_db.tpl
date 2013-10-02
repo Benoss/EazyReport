@@ -37,13 +37,13 @@
           <div class="col-lg-offset-2 col-lg-10">
   <a href='?table={{page.table}}&action=create' class="btn btn-primary btn-lg">Create Record</a>
     </div>
-%elif len(page.table_fields) > 0:
+%elif len(page.table_fields_vals) > 0:
    <form class="form-horizontal" role="form" method='post'>
-   %for name, field in page.table_fields.iteritems():  
+   %for field in page.table_fields_vals:  
     <div class="form-group">
     <input type="hidden" name="table" value="{{page.table}}" />
    <input type="hidden" name="action" value="update" />
-      <label for="{{ field.name }}" class="col-lg-2 control-label">{{ name }}</label>
+      <label for="{{ field.name }}" class="col-lg-2 control-label">{{ field.name }}</label>
       <div class="col-lg-10">
       %if field.db_field == 'text':
        <textarea class="form-control" id="{{ field.name }}" name="{{ field.name }}" rows="3">{{ page.values[0][field.name] if hasattr(page, 'values') else ''}}</textarea>

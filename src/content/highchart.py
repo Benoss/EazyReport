@@ -12,7 +12,7 @@ class HighChart():
         self.parent_page.foot_js.append(Js("highchart_exporting.js"))
         self.template = "highchart.tpl"
         self.id = random_string(10)
-        self.width = 600
+        self.width = 400
         self.height = 400
         self.parent_page.foot_js_templates.append(Template("highchart_js.tpl", self))
         

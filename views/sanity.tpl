@@ -13,7 +13,7 @@
  <div class="col-lg-10" role="main">
 %if page.current_report:
 <div class="col-lg-12">
-	<p>{{ model.name }}</p>
+	<p>{{ page.current_report.name }}</p>
     <p>{{ page.current_report.description }}</p>
     <p>Last report was run {{ page.current_report.last_run.strftime('%c') }}</p>
 </div>

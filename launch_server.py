@@ -1,4 +1,3 @@
-import os
 from libs import bottle
 from libs.bottle import run
 from src.dispatcher import *
@@ -15,7 +14,7 @@ if __name__ == '__main__':
         from paste import gzipper  # @UnresolvedImport
         app = gzipper.middleware(bottle.app())
         from cherrypy import wsgiserver  # @UnusedImport @UnresolvedImport
-    
+
         print "Paste Gzip activated, CherryPy activated"
         run(app=app, host='localhost', port=Config().ServerPort, server='cherrypy')
     except:
@@ -26,4 +25,3 @@ if __name__ == '__main__':
         except:
             print "Paste Gzip not found, CherryPy not found Debug mode"
             run(host='localhost', port=Config().ServerPort, debug=True)
-        

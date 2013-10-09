@@ -5,13 +5,13 @@ $(function () {
          $('#{{content.id}}').highcharts(
          {
          chart: {
-                type:'pie',
+             type:'pie',
              plotBackgroundColor: null,
              plotBorderWidth: null,
              plotShadow: false,
 			events: {
 			    load: function(event) {
-			      $('.highcharts-legend-item').last().children("span").append('<div style="width:140px; margin-top:30px;"><span style="float:left; width:70px "> Total </span><span style="float:right"> ' + total + '</span> </div>')
+			      $('#{{content.id}}').find('.highcharts-legend-item').last().children("span").append('<div style="width:140px; margin-top:30px;"><span style="float:left; width:70px "> Total </span><span style="float:right"> ' + total + '</span> </div>')
 			    }
 			  }
          },
@@ -24,6 +24,7 @@ $(function () {
          },
          plotOptions: {
              pie: {
+             size: '60%',
                  allowPointSelect: true,
                  cursor: 'pointer',
                  showInLegend: true,

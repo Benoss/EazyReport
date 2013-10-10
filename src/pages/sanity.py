@@ -27,7 +27,7 @@ class Sanity(WebPage):
                 
 
     def get_danger(self, model_id):
-        if self.model_mapping[model_id].nb_rows > 1:
+        if self.model_mapping[model_id].nb_rows > 0:
             return 'danger'
         else:
             return 'success'

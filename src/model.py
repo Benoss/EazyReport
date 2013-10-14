@@ -4,8 +4,21 @@ from libs.peewee import SqliteDatabase, MySQLDatabase, Model, CharField,\
 
 import ConfigParser, os
 
+from _mysql_exceptions import OperationalError
 
 
+class AutoReconnectMySQLDatabase(MySQLDatabase):
+    
+    def sql_error_handler(self, exc, sql, params, require_commit):
+        if isinstance(exc, OperationalError):
+            code = exc.args[0]
+            if code in (2006, 2003, 2013):
+                self.close()
+                self.connect()
+                return self.execute_sql(sql, params, require_commit)
+            
+        raise exc
+                
 
 def get_storage_db():
     config = ConfigParser.ConfigParser()
@@ -18,7 +31,7 @@ def get_storage_db():
     if storage_db_type == 'SQLite':
         return SqliteDatabase(config.get("SQLite", "file"), threadlocals=True)
     elif  storage_db_type == 'MySQL':
-        return MySQLDatabase(host=config.get("MySQL", "host"),\
+        return AutoReconnectMySQLDatabase(host=config.get("MySQL", "host"),\
                              user=config.get("MySQL", "login"),\
                              passwd=config.get("MySQL", "password"),\
                              database=config.get("MySQL", "default_db"),\

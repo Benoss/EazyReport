@@ -1,4 +1,3 @@
-
 try:
     import MySQLdb as MysqlDriver
 except ImportError:
@@ -86,12 +85,13 @@ class DBStore():
         self.connect_infos['host'] = infos['host']
         self.connect_infos['user'] = infos['user']
         self.connect_infos['passwd'] = infos['passwd']
+        self.driver_type = infos['driver_type']
         if infos['port']:
             self.connect_infos['port'] = infos['port']
         if infos['db']:
             self.connect_infos['db'] = infos['db']
         
-        if infos['driver_type'] == 'mysql':
+        if self.driver_type == 'mysql':
             self.connec_func = MysqlDriver.connect
         elif infos['driver_type'] == 'postgres':
             self.connect_infos['password'] = infos['passwd']
@@ -109,6 +109,14 @@ class DBStore():
     def connect(self):
         if self.connec_func:
             self.connection = self.connec_func(**self.connect_infos)
+            
+            if self.driver_type == 'mysql':
+                self.connection.set_character_set('utf8')
+                cursor = self.connection.cursor()
+                cursor.execute('SET NAMES utf8;')
+                cursor.execute('SET CHARACTER SET utf8;')
+                cursor.execute('SET character_set_connection=utf8;')
+
             self.connected = True
             
             

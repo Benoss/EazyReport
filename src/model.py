@@ -11,7 +11,8 @@ class AutoReconnectMySQLDatabase(MySQLDatabase):
     
     def sql_error_handler(self, exc, sql, params, require_commit):
         if isinstance(exc, OperationalError):
-            if exc.errcode in (2006, 2013):
+            code = exc.args[0]
+            if code in (2006, 2003, 2013):
                 self.close()
                 self.connect()
                 return self.execute_sql(sql, params, require_commit)

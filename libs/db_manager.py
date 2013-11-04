@@ -1,3 +1,4 @@
+import _mysql_exceptions
 try:
     import MySQLdb as MysqlDriver
 except ImportError:
@@ -119,6 +120,15 @@ class DBStore():
 
             self.connected = True
             
+    def _execute(self, cursor, query_string, *args):
+        try:
+            cursor.execute(query_string, *args)
+        except _mysql_exceptions.OperationalError, exc:
+            code = exc.args[0]
+            if code in (2006, 2003, 2013):
+                self.connected = False
+            
+            
             
     def get_last_query(self):
         return self._last_executed, self._last_query_string, self._last_query_args
@@ -129,7 +139,7 @@ class DBStore():
         cursor = self.connection.cursor()
         self._last_query_string = query_string
         self._last_query_args = args
-        cursor.execute(query_string, *args)
+        self._execute(cursor, query_string, *args)
         res = cursor.fetchall()
         self._last_executed = cursor._last_executed
         cursor.close()
@@ -139,7 +149,7 @@ class DBStore():
         if not self.connected:
             self.connect()
         cursor = self.connection.cursor()
-        cursor.execute(query_string, *args)
+        self._execute(cursor, query_string, *args)
         return_dict = []
         row = cursor.fetchone()
         while row :
@@ -156,7 +166,7 @@ class DBStore():
         if not self.connected:
             self.connect()
         cursor = self.connection.cursor()
-        cursor.execute(query_string, *args)
+        self._execute(cursor, query_string, *args)
         self.connection.commit()
         rowcount = cursor.rowcount
         cursor.close()
@@ -174,7 +184,7 @@ class DBStore():
         if not self.connected:
             self.connect()
         cursor = self.connection.cursor()
-        cursor.execute(query_string, *args)
+        self._execute(cursor, query_string, *args)
         res = Result(cursor)
         cursor.close()
         return res
@@ -184,7 +194,7 @@ class DBStore():
         if not self.connected:
             self.connect()
         cursor = self.connection.cursor()
-        cursor.execute(query_string, *args)
+        self._execute(cursor, query_string, *args)
         row = cursor.fetchone()
         while row:
             row = cursor.fetchone()

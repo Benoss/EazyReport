@@ -41,8 +41,6 @@ class Stores():
     
     
 
-
-
 def dict_to_update(field_dict, table_name, where_clause = None):
     return_values = []
     return_string = "UPDATE "+table_name+" SET "
@@ -53,9 +51,12 @@ def dict_to_update(field_dict, table_name, where_clause = None):
         update_strings.append(key+"=%s")
         return_values.append(value)
     
+    if len(return_values) == 0:
+        return None, None
+    
     return_string = return_string + ",".join(update_strings)
     if where_clause:
-        return_string = return_string + "WHERE " + where_clause
+        return_string = return_string + " WHERE " + where_clause
     
     return return_string, return_values
 
@@ -104,7 +105,7 @@ class DBStore():
         self._last_query_string = ""
         self._last_query_args = None
         self._last_executed = ""
-
+        self.rowcount = None
         self.connected = False
         
     def connect(self):
@@ -127,9 +128,8 @@ class DBStore():
             code = exc.args[0]
             if code in (2006, 2003, 2013):
                 self.connected = False
-            
-            
-            
+            raise
+
     def get_last_query(self):
         return self._last_executed, self._last_query_string, self._last_query_args
             
@@ -142,6 +142,7 @@ class DBStore():
         self._execute(cursor, query_string, *args)
         res = cursor.fetchall()
         self._last_executed = cursor._last_executed
+        self.rowcount = cursor.rowcount
         cursor.close()
         return res
     
